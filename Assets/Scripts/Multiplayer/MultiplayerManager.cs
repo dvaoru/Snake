@@ -19,7 +19,11 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private async void Connection()
     {
-        _room = await client.JoinOrCreate<State>(GameRoomName);
+        Dictionary<String, object> joinData = new Dictionary<string, object>()
+        {
+            {"t", _skinManager.GetRandomType()}
+        };
+        _room = await client.JoinOrCreate<State>(GameRoomName, joinData);
         _room.OnStateChange += OnChange;
     }
 
@@ -58,12 +62,15 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     [SerializeField] private PlayerAim _playerAim;
     [SerializeField] private Controller _controllerPrefab;
     [SerializeField] private Snake _snakePrefab;
+
+    [SerializeField] private SkinsManager _skinManager;
     private void CreatePlayer(Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
         Quaternion quaternion = Quaternion.identity;
 
-        Snake snake = Instantiate(_snakePrefab, position, quaternion);
+        //Snake snake = Instantiate(_snakePrefab, position, quaternion);
+        Snake snake = _skinManager.BuildSnake(player.type, position, quaternion);
         snake.Init(player.d);
 
         PlayerAim aim = Instantiate(_playerAim, position, quaternion);
@@ -72,6 +79,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         Controller controller = Instantiate(_controllerPrefab);
         controller.Init(aim, player, snake);
     }
+
     #endregion
 
     #region Enemy
@@ -80,8 +88,9 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreateEnemy(string key, Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
-
-        Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
+        
+         Snake snake = _skinManager.BuildSnake(player.type, position, Quaternion.identity);
+        //Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
         snake.Init(player.d);
         EnemyController enemy = snake.AddComponent<EnemyController>();
         enemy.Init(player, snake);

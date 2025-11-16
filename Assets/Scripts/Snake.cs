@@ -25,6 +25,15 @@ public class Snake : MonoBehaviour
         _tail.SetDetailsCount(detailCount);
     }
 
+    public void SetTailPrefab(Tail tail)
+    {
+        _tail = tail;
+    }
+
+    public Tail GetTail()
+    {
+        return _tail;
+    }
 
     public void Destroy()
     {

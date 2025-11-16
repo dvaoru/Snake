@@ -3654,6 +3654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 767523558}
   - component: {fileID: 767523557}
+  - component: {fileID: 767523559}
   m_Layer: 0
   m_Name: MultiplayerManager
   m_TagString: Untagged
@@ -3677,6 +3678,7 @@ MonoBehaviour:
   _playerAim: {fileID: 1793724666650006954, guid: 0e7ca3b810bf92e4fae5d72729c07d91, type: 3}
   _controllerPrefab: {fileID: 2208058935352922157, guid: c7440fe84cd8de541a8772b1d7cb5cc3, type: 3}
   _snakePrefab: {fileID: 2400956842631027465, guid: 48385c63bbeccb0478907db6e9c8197e, type: 3}
+  _skinManager: {fileID: 767523559}
 --- !u!4 &767523558
 Transform:
   m_ObjectHideFlags: 0
@@ -3692,6 +3694,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &767523559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767523556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ff3d3d418557349962403d6e86313e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinsManager
+  skinsList:
+  - {fileID: 11400000, guid: c5d201b85c21134408bb528bf435ecab, type: 2}
+  - {fileID: 11400000, guid: 3b628688a20112743bfd4131d551e5d3, type: 2}
+  - {fileID: 11400000, guid: 9286f791581ddcf46be19b14c50467fa, type: 2}
+  - {fileID: 11400000, guid: a18e1d284a5b41740b103e2afeaa3a2e, type: 2}
+  - {fileID: 11400000, guid: 352e9013f56c79944a80c98062215f7b, type: 2}
 --- !u!1001 &786457589
 PrefabInstance:
   m_ObjectHideFlags: 0

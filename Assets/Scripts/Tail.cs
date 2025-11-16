@@ -26,6 +26,16 @@ public class Tail : MonoBehaviour
         SetDetailsCount(detailCount);
     }
 
+    public void SetDetailPrefab(Transform detailPrefab)
+    {
+        _detailPrefab = detailPrefab;
+    }
+
+    public List<Transform> GetDetailsList()
+    {
+        return _details;
+    }
+
     public void Destroy()
     {
         for (int i = 0; i < _details.Count; i++)

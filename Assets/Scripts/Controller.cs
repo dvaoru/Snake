@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Colyseus.Schema;
 using Unity.VisualScripting;
@@ -25,7 +24,6 @@ public class Controller : MonoBehaviour
         _plane = new Plane(Vector3.up, Vector3.zero);
 
         _snake.AddComponent<CameraManager>().Init(_cameraOffsetY);
-
         _player.OnChange += OnChange;
 
     }
@@ -50,6 +48,15 @@ public class Controller : MonoBehaviour
             {"z", position.z}
         };
         _multiplayerManager.SendMessageToServer("move", data);
+    }
+
+    private void SendSkin(byte skinType)
+    {
+          Dictionary<string, byte> data = new Dictionary<string, byte>()
+          {
+            {"t", skinType}  
+          };
+          _multiplayerManager.SendMessage("skin", data);
     }
 
     private void MoveCursor()

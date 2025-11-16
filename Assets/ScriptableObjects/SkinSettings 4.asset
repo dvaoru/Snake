@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b26d1914d9c894ea105ff09de34e0e, type: 3}
+  m_Name: SkinSettings 4
+  m_EditorClassIdentifier: Assembly-CSharp::SkinSettings
+  snakePrefab: {fileID: 2400956842631027465, guid: 48385c63bbeccb0478907db6e9c8197e, type: 3}
+  detailPrefab: {fileID: 2123370688053003578, guid: f46f54d9705678f4baac25f527446b8d, type: 3}
+  tailPrefab: {fileID: 1583799958805780165, guid: 16ecf2c19ba969143bbe6a71c22d8236, type: 3}
+  material: {fileID: 2100000, guid: e63c4cc5c2c65c6408c0478e315c09ca, type: 2}
