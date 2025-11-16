@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 234f149fee0d69144ac3ccdda327088b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _colyseusSettings: {fileID: 11400000, guid: cb3c816f0e20ff740837b08fb4f31ace, type: 2}
+  - _playerAim: {fileID: 1793724666650006954, guid: 0e7ca3b810bf92e4fae5d72729c07d91, type: 3}
+  - _controllerPrefab: {fileID: 2208058935352922157, guid: c7440fe84cd8de541a8772b1d7cb5cc3, type: 3}
+  - _snakePrefab: {fileID: 2400956842631027465, guid: 48385c63bbeccb0478907db6e9c8197e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
