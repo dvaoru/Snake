@@ -3709,9 +3709,7 @@ MonoBehaviour:
   skinsList:
   - {fileID: 11400000, guid: c5d201b85c21134408bb528bf435ecab, type: 2}
   - {fileID: 11400000, guid: 3b628688a20112743bfd4131d551e5d3, type: 2}
-  - {fileID: 11400000, guid: 9286f791581ddcf46be19b14c50467fa, type: 2}
-  - {fileID: 11400000, guid: a18e1d284a5b41740b103e2afeaa3a2e, type: 2}
-  - {fileID: 11400000, guid: 352e9013f56c79944a80c98062215f7b, type: 2}
+  - {fileID: 11400000, guid: 9174ba876041db34a9b8ab5fa3a33c6c, type: 2}
 --- !u!1001 &786457589
 PrefabInstance:
   m_ObjectHideFlags: 0
