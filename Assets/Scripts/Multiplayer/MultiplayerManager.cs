@@ -23,6 +23,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         {
             {"t", _skinManager.GetRandomType()}
         };
+        var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
         _room = await client.JoinOrCreate<State>(GameRoomName, joinData);
         _room.OnStateChange += OnChange;
     }

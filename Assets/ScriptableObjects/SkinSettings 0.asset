@@ -15,5 +15,4 @@ MonoBehaviour:
   snakePrefab: {fileID: 2400956842631027465, guid: 48385c63bbeccb0478907db6e9c8197e, type: 3}
   detailPrefab: {fileID: 2123370688053003578, guid: f46f54d9705678f4baac25f527446b8d, type: 3}
   tailPrefab: {fileID: 1583799958805780165, guid: 16ecf2c19ba969143bbe6a71c22d8236, type: 3}
-  color: {r: 0.9339623, g: 0.083704144, b: 0.083704144, a: 0}
-  material: {fileID: 2100000, guid: befe4e51983a55949823366d9fcd2f2b, type: 2}
+  material: {fileID: 2100000, guid: 52a716917038e29448012bdb25d23da1, type: 2}

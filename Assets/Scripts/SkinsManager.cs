@@ -8,7 +8,7 @@ public class SkinsManager : MonoBehaviour
 
     public int GetRandomType()
     {
-        return Random.Range(0, skinsList.Length);
+        return 0;//Random.Range(0, skinsList.Length);
     }
 
     public Snake BuildSnake(int type, Vector3 position, Quaternion quaternion)
