@@ -9,7 +9,7 @@ public class Snake : MonoBehaviour
 
     public float Speed { get { return _speed; } }
 
-    [SerializeField] private Transform _head;
+    [field: SerializeField] public Transform _head {get; private set;}
     [SerializeField] private Tail _tailPrefab;
     [SerializeField] private float _speed = 2f;
     private Tail _tail;

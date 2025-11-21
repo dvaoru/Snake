@@ -23,7 +23,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         {
             {"t", _skinManager.GetRandomType()}
         };
-        var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
+        //  var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
         _room = await client.JoinOrCreate<State>(GameRoomName, joinData);
         _room.OnStateChange += OnChange;
     }
@@ -40,7 +40,13 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
         _room.State.players.OnAdd += CreateEnemy;
         _room.State.players.OnRemove += RemoveEnemy;
+
+        _room.State.apples.ForEach(CreateApple);
+        _room.State.apples.OnAdd += (key, apple) => CreateApple(apple);
+        _room.State.apples.OnRemove += RemoveApple;
     }
+
+
 
     protected override void OnApplicationQuit()
     {
@@ -55,6 +61,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     public void SendMessageToServer(string key, Dictionary<string, object> data)
     {
+        Debug.Log("SendMessage " + key + " " + data.Keys);
         _room.Send(key, data);
     }
     #endregion
@@ -75,7 +82,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         snake.Init(player.d);
 
         PlayerAim aim = Instantiate(_playerAim, position, quaternion);
-        aim.Init(snake.Speed);
+        aim.Init(snake._head, snake.Speed);
 
         Controller controller = Instantiate(_controllerPrefab);
         controller.Init(aim, player, snake);
@@ -89,8 +96,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     private void CreateEnemy(string key, Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
-        
-         Snake snake = _skinManager.BuildSnake(player.type, position, Quaternion.identity);
+
+        Snake snake = _skinManager.BuildSnake(player.type, position, Quaternion.identity);
         //Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
         snake.Init(player.d);
         EnemyController enemy = snake.AddComponent<EnemyController>();
@@ -112,4 +119,26 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     }
     #endregion
+
+    #region Apple
+
+    [SerializeField] private Apple _applePrefab;
+    private Dictionary<Vector2float, Apple> _apples = new Dictionary<Vector2float, Apple>();
+    private void CreateApple(Vector2float vector2float)
+    {
+        Vector3 position = new Vector3(vector2float.x, 0, vector2float.z);
+        var apple = Instantiate(_applePrefab, position, Quaternion.identity);
+        apple.Init(vector2float);
+        _apples.Add(vector2float, apple);
+    }
+
+    private void RemoveApple(int key, Vector2float vector2float)
+    {
+        if (_apples.ContainsKey(vector2float) == false) return;
+        var apple = _apples[vector2float];
+        _apples.Remove(vector2float);
+        apple.Destroy();
+    }
+    #endregion
+
 }

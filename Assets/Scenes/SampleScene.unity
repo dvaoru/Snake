@@ -3679,6 +3679,7 @@ MonoBehaviour:
   _controllerPrefab: {fileID: 2208058935352922157, guid: c7440fe84cd8de541a8772b1d7cb5cc3, type: 3}
   _snakePrefab: {fileID: 2400956842631027465, guid: 48385c63bbeccb0478907db6e9c8197e, type: 3}
   _skinManager: {fileID: 767523559}
+  _applePrefab: {fileID: 4605500899833720897, guid: 88c7650204831c74b8f5eae874875ee6, type: 3}
 --- !u!4 &767523558
 Transform:
   m_ObjectHideFlags: 0
