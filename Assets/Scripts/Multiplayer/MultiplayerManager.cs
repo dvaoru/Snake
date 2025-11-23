@@ -23,12 +23,13 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     private async void Connection()
     {
+        Debug.Log("Мультиплеер подключение");
         Dictionary<String, object> joinData = new Dictionary<string, object>()
         {
             {"t", _skinManager.GetRandomType()},
             {"login", PlayerSettings.Instance.Login}
         };
-        //  var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
+        var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
         _room = await client.JoinOrCreate<State>(GameRoomName, joinData);
         _room.OnStateChange += OnChange;
     }
@@ -217,14 +218,12 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
     public async void RestartGame()
     {
-        
+
         _enemies.Clear();
         _apples.Clear();
         _leaders.Clear();
 
         await _room.Leave();
-        _room = null;
-
         SceneManager.LoadScene("Lobby");
     }
     #endregion

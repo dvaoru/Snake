@@ -18,6 +18,7 @@ public class Controller : MonoBehaviour
     private string _clientId;
     public void Init(string clientId, PlayerAim aim, Player player, Snake snake)
     {
+        Debug.Log("Контроллер инит: " + clientId + " " + aim.name + " " + player.login + " " + snake.name);
         _multiplayerManager = MultiplayerManager.Instance;
         _playerAim = aim;
         _player = player;
