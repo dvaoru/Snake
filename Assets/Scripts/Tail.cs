@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +14,20 @@ public class Tail : MonoBehaviour
     private List<Vector3> _positionsHistory = new List<Vector3>();
     private List<Quaternion> _rotationHistory = new List<Quaternion>();
 
+    private int _playerLayer;
+    private bool _isPlayer;
 
-    public void Init(Transform head, float speed, int detailCount)
+
+    public void Init(Transform head, float speed, int detailCount, int playerLayer, bool isPlayer)
     {
+
+        _playerLayer = playerLayer;
+        _isPlayer = isPlayer;
+        if (_isPlayer)
+        {
+            SetPlayerLayer(gameObject);
+        }
+
         _head = head;
         _snakeSpeed = speed;
         _details.Add(transform);
@@ -24,6 +36,16 @@ public class Tail : MonoBehaviour
         _positionsHistory.Add(transform.position);
         _rotationHistory.Add(transform.rotation);
         SetDetailsCount(detailCount);
+    }
+
+    private void SetPlayerLayer(GameObject gObj)
+    {
+        gObj.layer = _playerLayer;
+        var childrens = GetComponentsInChildren<Transform>();
+        foreach (var item in childrens)
+        {
+            item.gameObject.layer = _playerLayer;
+        }
     }
 
     public void SetDetailPrefab(Transform detailPrefab)
@@ -69,9 +91,12 @@ public class Tail : MonoBehaviour
         Vector3 position = _details[_details.Count - 1].position;
         Quaternion rotation = _details[_details.Count - 1].rotation;
         Transform detail = Instantiate(_detailPrefab, position, rotation);
+        if (_isPlayer) SetPlayerLayer(detail.gameObject);
+
         _details.Insert(0, detail);
         _positionsHistory.Add(position);
         _rotationHistory.Add(rotation);
+
 
     }
 
@@ -111,5 +136,36 @@ public class Tail : MonoBehaviour
         }
     }
 
+    internal DetailPositions GetDetailPositions()
+    {
+        int detailsCount = _details.Count;
 
+        DetailPosition[] ds = new DetailPosition[detailsCount];
+        for (int i = 0; i < detailsCount; i++)
+        {
+            ds[i] = new DetailPosition()
+            {
+              x = _details[i].position.x,
+              z = _details[i].position.z  
+            };
+        }
+        return new DetailPositions
+        {
+            ds = ds
+        };
+    }
+}
+
+[System.Serializable]
+public struct DetailPosition
+{
+    public float x;
+    public float z;
+}
+
+[System.Serializable]
+public struct DetailPositions
+{
+    public string id;
+    public DetailPosition[] ds;
 }

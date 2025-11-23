@@ -8,8 +8,10 @@ public class EnemyController : MonoBehaviour
 
     private Player _player;
     private Snake _snake;
-    public void Init(Player player, Snake snake)
+    private string _clientId;
+    public void Init(string clientId, Player player, Snake snake)
     {
+        _clientId = clientId;
         _player = player;
         _snake = snake;
         _player.OnChange += OnChange;
@@ -42,7 +44,7 @@ public class EnemyController : MonoBehaviour
     public void Destroy()
     {
         _player.OnChange -= OnChange;
-        _snake.Destroy();
+        _snake.Destroy(_clientId);
     }
 
 

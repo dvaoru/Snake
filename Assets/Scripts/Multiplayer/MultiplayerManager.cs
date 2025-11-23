@@ -34,7 +34,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         _room.OnStateChange -= OnChange;
         state.players.ForEach((key, player) =>
         {
-            if (key == _room.SessionId) CreatePlayer(player);
+            if (key == _room.SessionId) CreatePlayer(key, player);
             else CreateEnemy(key, player);
         });
 
@@ -64,6 +64,12 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         Debug.Log("SendMessage " + key + " " + data.Keys);
         _room.Send(key, data);
     }
+
+    public void SendMessageToServer(string key, string data)
+    {
+        Debug.Log("SendMessage " + key + " " + data);
+        _room.Send(key, data);
+    }
     #endregion
 
     #region Player
@@ -72,20 +78,20 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     [SerializeField] private Snake _snakePrefab;
 
     [SerializeField] private SkinsManager _skinManager;
-    private void CreatePlayer(Player player)
+    private void CreatePlayer(string clientId, Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
         Quaternion quaternion = Quaternion.identity;
 
         //Snake snake = Instantiate(_snakePrefab, position, quaternion);
         Snake snake = _skinManager.BuildSnake(player.type, position, quaternion);
-        snake.Init(player.d);
+        snake.Init(player.d, true);
 
         PlayerAim aim = Instantiate(_playerAim, position, quaternion);
         aim.Init(snake._head, snake.Speed);
 
         Controller controller = Instantiate(_controllerPrefab);
-        controller.Init(aim, player, snake);
+        controller.Init(clientId, aim, player, snake);
     }
 
     #endregion
@@ -93,7 +99,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     #region Enemy
     Dictionary<string, EnemyController> _enemies = new Dictionary<string, EnemyController>();
 
-    private void CreateEnemy(string key, Player player)
+    private void CreateEnemy(string clientId, Player player)
     {
         Vector3 position = new Vector3(player.x, 0, player.z);
 
@@ -101,8 +107,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         //Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
         snake.Init(player.d);
         EnemyController enemy = snake.AddComponent<EnemyController>();
-        enemy.Init(player, snake);
-        _enemies.Add(key, enemy);
+        enemy.Init(clientId, player, snake);
+        _enemies.Add(clientId, enemy);
     }
 
     private void RemoveEnemy(string key, Player value)

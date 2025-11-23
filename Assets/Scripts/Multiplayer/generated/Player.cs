@@ -17,7 +17,10 @@ public partial class Player : Schema {
 	[Type(2, "uint8")]
 	public byte d = default(byte);
 
-	[Type(3, "uint8")]
+	[Type(3, "uint16")]
+	public ushort score = default(ushort);
+
+	[Type(4, "uint8")]
 	public byte type = default(byte);
 }
 

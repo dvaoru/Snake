@@ -14,7 +14,9 @@ public class Controller : MonoBehaviour
     private PlayerAim _playerAim;
 
     private MultiplayerManager _multiplayerManager;
-    public void Init(PlayerAim aim, Player player, Snake snake)
+
+    private string _clientId;
+    public void Init(string clientId, PlayerAim aim, Player player, Snake snake)
     {
         _multiplayerManager = MultiplayerManager.Instance;
         _playerAim = aim;
@@ -22,8 +24,10 @@ public class Controller : MonoBehaviour
         _snake = snake;
         _camera = Camera.main;
         _plane = new Plane(Vector3.up, Vector3.zero);
+        _clientId = clientId;
 
-        _snake.AddComponent<CameraManager>().Init(_cameraOffsetY);
+        _camera.transform.parent = _snake.transform;
+        _camera.transform.localPosition = Vector3.up * _cameraOffsetY;
         _player.OnChange += OnChange;
 
     }
@@ -48,15 +52,6 @@ public class Controller : MonoBehaviour
             {"z", position.z}
         };
         _multiplayerManager.SendMessageToServer("move", data);
-    }
-
-    private void SendSkin(byte skinType)
-    {
-          Dictionary<string, byte> data = new Dictionary<string, byte>()
-          {
-            {"t", skinType}  
-          };
-          _multiplayerManager.SendMessage("skin", data);
     }
 
     private void MoveCursor()
@@ -94,7 +89,10 @@ public class Controller : MonoBehaviour
     public void Destroy()
     {
         _player.OnChange -= OnChange;
-        _snake.Destroy();
+         _camera.transform.parent = null;
+        _snake.Destroy(_clientId);
+       
+        Destroy(gameObject);
     }
 
 }

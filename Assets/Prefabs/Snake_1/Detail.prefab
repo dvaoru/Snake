@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2123370688053003578}
   - component: {fileID: 2386532965205627096}
   - component: {fileID: 7582803292226176092}
+  - component: {fileID: 8906319556541496749}
   m_Layer: 0
   m_Name: Detail
   m_TagString: Untagged
@@ -69,6 +70,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorChanger
   _meshRenderers:
   - {fileID: 1876055316856565731}
+--- !u!114 &8906319556541496749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542524249668625489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12faffda280a5794a8e3b8a4a5ae8899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooseEffect
+  _looseEffect: {fileID: 6337447475170569117, guid: f18bc8e86746677419b9e0340a6aa844, type: 3}
 --- !u!1001 &6535448897766768668
 PrefabInstance:
   m_ObjectHideFlags: 0

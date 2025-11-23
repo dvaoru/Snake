@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1583799958805780165}
   - component: {fileID: 7014906405538189201}
   - component: {fileID: 9033578570821863894}
+  - component: {fileID: 4021647305584253405}
   m_Layer: 0
   m_Name: Tail
   m_TagString: Untagged
@@ -84,6 +85,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorChanger
   _meshRenderers:
   - {fileID: 8126789738856484943}
+--- !u!114 &4021647305584253405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528160839115156565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12faffda280a5794a8e3b8a4a5ae8899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooseEffect
+  _looseEffect: {fileID: 6337447475170569117, guid: f18bc8e86746677419b9e0340a6aa844, type: 3}
 --- !u!1001 &3491321388797018032
 PrefabInstance:
   m_ObjectHideFlags: 0
