@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Colyseus;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 {
@@ -21,7 +23,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
         Dictionary<String, object> joinData = new Dictionary<string, object>()
         {
-            {"t", _skinManager.GetRandomType()}
+            {"t", _skinManager.GetRandomType()},
+            {"login", PlayerSettings.Instance.Login}
         };
         //  var client = new ColyseusClient("wss://snakeserver-4nd6.onrender.com");
         _room = await client.JoinOrCreate<State>(GameRoomName, joinData);
@@ -85,13 +88,15 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
         //Snake snake = Instantiate(_snakePrefab, position, quaternion);
         Snake snake = _skinManager.BuildSnake(player.type, position, quaternion);
-        snake.Init(player.d, true);
+        snake.Init(player.d, player.login, true);
 
         PlayerAim aim = Instantiate(_playerAim, position, quaternion);
         aim.Init(snake._head, snake.Speed);
 
         Controller controller = Instantiate(_controllerPrefab);
         controller.Init(clientId, aim, player, snake);
+
+        AddLeader(clientId, player);
     }
 
     #endregion
@@ -105,14 +110,16 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
 
         Snake snake = _skinManager.BuildSnake(player.type, position, Quaternion.identity);
         //Snake snake = Instantiate(_snakePrefab, position, Quaternion.identity);
-        snake.Init(player.d);
+        snake.Init(player.d, player.login);
         EnemyController enemy = snake.AddComponent<EnemyController>();
         enemy.Init(clientId, player, snake);
         _enemies.Add(clientId, enemy);
+        AddLeader(clientId, player);
     }
 
     private void RemoveEnemy(string key, Player value)
     {
+        RemoveLeader(key);
         if (_enemies.ContainsKey(key) == false)
         {
             Debug.LogError("Попытка удаления врага, которого неи в словаре");
@@ -144,6 +151,55 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         var apple = _apples[vector2float];
         _apples.Remove(vector2float);
         apple.Destroy();
+    }
+    #endregion
+
+    #region Leaderbord
+    private class LoginScorePair
+    {
+        public string login;
+        public float score;
+    }
+
+    [SerializeField] private Text _text;
+    private Dictionary<string, LoginScorePair> _leaders = new Dictionary<string, LoginScorePair>();
+
+    private void AddLeader(string sesionId, Player player)
+    {
+        if (_leaders.ContainsKey(sesionId)) return;
+        _leaders.Add(sesionId, new LoginScorePair()
+        {
+            login = player.login,
+            score = player.score
+        });
+        UpdateLeaderboard();
+    }
+
+    private void RemoveLeader(string sessionId)
+    {
+        if (_leaders.ContainsKey(sessionId) == false) return;
+        _leaders.Remove(sessionId);
+        UpdateLeaderboard();
+    }
+
+    public void UpdateScore(string sessionId, int score)
+    {
+        if (_leaders.ContainsKey(sessionId) == false) return;
+        _leaders[sessionId].score = score;
+        UpdateLeaderboard();
+    }
+
+    private void UpdateLeaderboard()
+    {
+        var topCount = Mathf.Clamp(_leaders.Count, 0, 10);
+        var top = _leaders.OrderByDescending(pair => pair.Value.score).Take(topCount);
+        var text = "";
+        var i = 1;
+        foreach (var item in top)
+        {
+            text += $"{i}. {item.Value.login}: {item.Value.score}\n";
+        }
+        _text.text = text;
     }
     #endregion
 

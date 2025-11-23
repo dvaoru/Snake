@@ -78,6 +78,9 @@ public class Controller : MonoBehaviour
                 case "d":
                     _snake.SetDetailCount((byte)changes[i].Value);
                     break;
+                case "score":
+                    _multiplayerManager.UpdateScore(_clientId, (ushort)changes[i].Value);
+                    break;
                 default:
                     Debug.LogWarning("Не обрабатывается изменение поля " + changes[i].Field);
                     break;
@@ -89,9 +92,9 @@ public class Controller : MonoBehaviour
     public void Destroy()
     {
         _player.OnChange -= OnChange;
-         _camera.transform.parent = null;
+        _camera.transform.parent = null;
         _snake.Destroy(_clientId);
-       
+
         Destroy(gameObject);
     }
 

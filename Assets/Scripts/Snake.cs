@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 
@@ -11,9 +12,11 @@ public class Snake : MonoBehaviour
     [field: SerializeField] public Transform _head {get; private set;}
     [SerializeField] private Tail _tailPrefab;
     [SerializeField] private float _speed = 2f;
+
+    [SerializeField] private TextMeshProUGUI _loginText;
     private Tail _tail;
 
-    public void Init(int detailCount, bool isPlayer = false)
+    public void Init(int detailCount, string login, bool isPlayer = false)
     {
         if (isPlayer)
         {
@@ -26,6 +29,7 @@ public class Snake : MonoBehaviour
         }
         _tail = Instantiate(_tailPrefab, transform.position, Quaternion.identity);
         _tail.Init(_head, _speed, detailCount, _playerLayer, isPlayer);
+        _loginText.text = login;
     }
 
     public void SetDetailCount(int detailCount)
