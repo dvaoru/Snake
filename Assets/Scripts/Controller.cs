@@ -94,7 +94,7 @@ public class Controller : MonoBehaviour
         _player.OnChange -= OnChange;
         _camera.transform.parent = null;
         _snake.Destroy(_clientId);
-
+        _multiplayerManager.ShowRestartScreen(_player.score);
         Destroy(gameObject);
     }
 

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Colyseus;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MultiplayerManager : ColyseusManager<MultiplayerManager>
@@ -86,8 +88,8 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         Vector3 position = new Vector3(player.x, 0, player.z);
         Quaternion quaternion = Quaternion.identity;
 
-        //Snake snake = Instantiate(_snakePrefab, position, quaternion);
-        Snake snake = _skinManager.BuildSnake(player.type, position, quaternion);
+        Snake snake = Instantiate(_snakePrefab, position, quaternion);
+        //Snake snake = _skinManager.BuildSnake(player.type, position, quaternion);
         snake.Init(player.d, player.login, true);
 
         PlayerAim aim = Instantiate(_playerAim, position, quaternion);
@@ -200,6 +202,30 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
             text += $"{i}. {item.Value.login}: {item.Value.score}\n";
         }
         _text.text = text;
+    }
+    #endregion
+
+    #region RestartScreen
+    [SerializeField] private GameObject _restartScreen;
+    [SerializeField] private TextMeshProUGUI _scoreText;
+
+    public void ShowRestartScreen(int playerScore)
+    {
+        _scoreText.text = playerScore.ToString();
+        _restartScreen.SetActive(true);
+    }
+
+    public async void RestartGame()
+    {
+        
+        _enemies.Clear();
+        _apples.Clear();
+        _leaders.Clear();
+
+        await _room.Leave();
+        _room = null;
+
+        SceneManager.LoadScene("Lobby");
     }
     #endregion
 
